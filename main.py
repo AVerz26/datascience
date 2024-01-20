@@ -19,7 +19,7 @@ def main():
     st.write(df)
 
     # Seleção de colunas categóricas e quantitativas
-    categorical_columns = ['ID', 'Sex', 'Marital status', 'Education', 'Occupation', 'Settlement size']
+    categorical_columns = ['Sex', 'Marital status', 'Education', 'Occupation', 'Settlement size']
     numerical_columns = ['Age', 'Income']
 
     st.subheader("Colunas Categóricas:")
@@ -35,7 +35,7 @@ def main():
     df[selected_numerical_columns] = df[selected_numerical_columns].fillna(0)
 
     # Dummizar variáveis categóricas
-    df_dummies = pd.get_dummies(df[categorical_columns], drop_first=True)
+    df_dummies = pd.get_dummies(df['Education', 'Occupation', 'Settlement size'], drop_first=True)
     df = pd.concat([df, df_dummies], axis=1)
 
     # Selecionar as colunas corretas após a dummização
