@@ -19,8 +19,8 @@ def main():
     st.write(df)
 
     # Seleção de colunas categóricas e quantitativas
-    categorical_columns = ['ID', 'sex', 'Marital status', 'education', 'occupation', 'settlement size']
-    numerical_columns = ['age', 'income']
+    categorical_columns = ['ID', 'Sex', 'Marital status', 'Education', 'Occupation', 'Settlement Size']
+    numerical_columns = ['Age', 'Income']
 
     st.subheader("Colunas Categóricas:")
     st.write(categorical_columns)
