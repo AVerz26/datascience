@@ -42,10 +42,12 @@ def main():
     df['cluster'] = kmeans.fit_predict(X_scaled)
 
     # Visualização dos clusters
+    
     st.subheader("Visualização dos Clusters")
 
     # Chame a função para gerar o plot
-    visualize_clusters(X_scaled, df['cluster'], optimal_k, kmeans.cluster_centers_)
+    visualize_clusters(X_scaled, df['cluster'], optimal_k, kmeans.cluster_centers_, scaler)
+
 
 def visualize_clusters(X_scaled, cluster_col, optimal_k, centroids, scaler):
     # Reverter a escala original dos dados
