@@ -3,7 +3,6 @@ import pandas as pd
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
-import seaborn as sns
 
 def main():
     st.title("Técnicas de Análise por Clusterização")
@@ -46,18 +45,14 @@ def main():
 
     # Visualização dos clusters
     st.subheader("Visualização dos Clusters")
-    visualize_clusters(df, selected_columns, 'cluster')
+    visualize_clusters(X_scaled, df['cluster'], optimal_k)
 
-def visualize_clusters(df, features, cluster_col):
-    # Pairplot para visualização dos clusters
-    pairplot_data = pd.concat([df[features], df[cluster_col]], axis=1)
-    sns.pairplot(pairplot_data, hue=cluster_col, palette='viridis', diag_kind='kde')
+def visualize_clusters(X_scaled, cluster_col, optimal_k):
+    plt.scatter(X_scaled[:, 0], X_scaled[:, 1], c=cluster_col, cmap='viridis')
+    plt.title(f'Clusters identificados pelo K-means (k={optimal_k})')
+    plt.xlabel('Feature 1 (age)')
+    plt.ylabel('Feature 2 (income)')
     st.pyplot()
-
-    # Visualização da média das variáveis por cluster
-    st.subheader("Média das Variáveis por Cluster")
-    cluster_means = df.groupby(cluster_col)[features].mean()
-    st.write(cluster_means)
 
 if __name__ == "__main__":
     main()
