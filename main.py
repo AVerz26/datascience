@@ -45,13 +45,18 @@ def main():
 
     # Visualização dos clusters
     st.subheader("Visualização dos Clusters")
+
+    # Chame a função para gerar o plot
     visualize_clusters(X_scaled, df['cluster'], optimal_k)
 
 def visualize_clusters(X_scaled, cluster_col, optimal_k):
+    # Criar o plot usando matplotlib
     plt.scatter(X_scaled[:, 0], X_scaled[:, 1], c=cluster_col, cmap='viridis')
     plt.title(f'Clusters identificados pelo K-means (k={optimal_k})')
     plt.xlabel('Feature 1 (age)')
     plt.ylabel('Feature 2 (income)')
+
+    # Incorporar o plot no Streamlit
     st.pyplot()
 
 if __name__ == "__main__":
