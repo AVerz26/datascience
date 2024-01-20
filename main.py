@@ -65,4 +65,5 @@ def visualize_clusters(df, features, cluster_col):
     cluster_means = df.groupby(cluster_col)[features].mean()
     st.write(cluster_means)
 
+if __name__ == "__main__":
     main()
