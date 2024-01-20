@@ -19,7 +19,6 @@ def main():
 
     # Seleção de colunas categóricas e quantitativas
     selected_columns = ['Age', 'Income', 'Education', 'Occupation', 'Settlement size']
-    
 
     # Análise de clusterização
     st.subheader("Análise de Clusterização")
@@ -34,7 +33,6 @@ def main():
     scaler = StandardScaler()
     X_scaled = scaler.fit_transform(X)
 
-    
     # Aplicação do algoritmo KMeans
     n_clusters = st.slider("Número de Clusters (k)", min_value=2, max_value=10, value=3)
     optimal_k = n_clusters  # Ajuste conforme a visualização da curva do cotovelo
@@ -47,14 +45,16 @@ def main():
     st.subheader("Visualização dos Clusters")
 
     # Chame a função para gerar o plot
-    visualize_clusters(X_scaled, df['cluster'], optimal_k)
+    visualize_clusters(X_scaled, df['cluster'], optimal_k, kmeans.cluster_centers_)
 
-def visualize_clusters(X_scaled, cluster_col, optimal_k):
+def visualize_clusters(X_scaled, cluster_col, optimal_k, centroids):
     # Criar o plot usando matplotlib
-    plt.scatter(X_scaled[:, 0], X_scaled[:, 1], c=cluster_col, cmap='viridis')
+    plt.scatter(X_scaled[:, 0], X_scaled[:, 1], c=cluster_col, cmap='viridis', label='Dados')
+    plt.scatter(centroids[:, 0], centroids[:, 1], c='red', marker='X', s=100, label='Centroids')
     plt.title(f'Clusters identificados pelo K-means (k={optimal_k})')
     plt.xlabel('Feature 1 (age)')
     plt.ylabel('Feature 2 (income)')
+    plt.legend()
     st.set_option('deprecation.showPyplotGlobalUse', False)
     # Incorporar o plot no Streamlit
     st.pyplot()
