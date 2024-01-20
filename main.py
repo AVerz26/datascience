@@ -46,7 +46,7 @@ def main():
 
     # Visualização dos clusters
     st.subheader("Visualização dos Clusters")
-    visualize_clusters(X_scaled, X_scaled[:,1], 'cluster')
+    visualize_clusters(df, selected_columns, 'cluster')
 
 def visualize_clusters(df, features, cluster_col):
     # Pairplot para visualização dos clusters
@@ -58,7 +58,6 @@ def visualize_clusters(df, features, cluster_col):
     st.subheader("Média das Variáveis por Cluster")
     cluster_means = df.groupby(cluster_col)[features].mean()
     st.write(cluster_means)
-
 
 if __name__ == "__main__":
     main()
