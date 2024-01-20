@@ -46,7 +46,7 @@ def main():
 
     # Visualização dos clusters
     st.subheader("Visualização dos Clusters")
-    visualize_clusters(X, X_scaled, 'cluster')
+    visualize_clusters(X_scaled, X_scaled[:,1], 'cluster')
 
 def visualize_clusters(df, features, cluster_col):
     # Pairplot para visualização dos clusters
