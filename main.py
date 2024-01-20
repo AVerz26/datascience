@@ -19,41 +19,34 @@ def main():
     st.write(df)
 
     # Seleção de colunas categóricas e quantitativas
-    categorical_columns = ['Sex', 'Marital status', 'Education', 'Occupation', 'Settlement size']
-    dummies_columns = ['Education', 'Occupation', 'Settlement size']
-    numerical_columns = ['Age', 'Income']
-
-    st.subheader("Colunas Categóricas:")
-    st.write(categorical_columns)
-
-    st.subheader("Colunas Quantitativas:")
-    selected_numerical_columns = numerical_columns
+    selected_columns = ['Age', 'Income', 'Education', 'Occupation', 'Settlement size']
+    
 
     # Análise de clusterização
     st.subheader("Análise de Clusterização")
 
-    # Tratamento dos dados (preenchimento de valores ausentes e normalização)
-    df[selected_numerical_columns] = df[selected_numerical_columns].fillna(0)
+    # Criando um DataFrame apenas com as colunas selecionadas
+    X = data[selected_columns]
 
-    # Dummizar variáveis categóricas
-    df_dummies = pd.get_dummies(df[dummies_columns], drop_first=True)
-    df = pd.concat([df, df_dummies], axis=1)
+    # Dummizando as colunas 'education', 'occupation' e 'settlement_size'
+    X = pd.get_dummies(X, columns=['Education', 'Occupation', 'Settlement size'], drop_first=True)
 
-    # Selecionar as colunas corretas após a dummização
-    selected_columns_after_dummization = selected_numerical_columns + list(df_dummies.columns)
-
-    # Escalonamento das variáveis
+    # Normalizando os dados
     scaler = StandardScaler()
-    X_scaled = scaler.fit_transform(df[selected_columns_after_dummization])
+    X_scaled = scaler.fit_transform(X)
 
+    
     # Aplicação do algoritmo KMeans
     n_clusters = st.slider("Número de Clusters (k)", min_value=2, max_value=10, value=3)
-    kmeans = KMeans(n_clusters=n_clusters, random_state=42)
-    df['cluster'] = kmeans.fit_predict(X_scaled)
+    optimal_k = n_clusters  # Ajuste conforme a visualização da curva do cotovelo
+
+    # Aplicando o K-means com o número ótimo de clusters
+    kmeans = KMeans(n_clusters=optimal_k, random_state=42)
+    data['cluster'] = kmeans.fit_predict(X_scaled)
 
     # Visualização dos clusters
     st.subheader("Visualização dos Clusters")
-    visualize_clusters(df, selected_columns_after_dummization, 'cluster')
+    visualize_clusters(X, X_scaled, 'cluster')
 
 def visualize_clusters(df, features, cluster_col):
     # Pairplot para visualização dos clusters
