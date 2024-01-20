@@ -26,7 +26,7 @@ def main():
     st.subheader("Análise de Clusterização")
 
     # Criando um DataFrame apenas com as colunas selecionadas
-    X = data[selected_columns]
+    X = df[selected_columns]
 
     # Dummizando as colunas 'education', 'occupation' e 'settlement_size'
     X = pd.get_dummies(X, columns=['Education', 'Occupation', 'Settlement size'], drop_first=True)
@@ -42,7 +42,7 @@ def main():
 
     # Aplicando o K-means com o número ótimo de clusters
     kmeans = KMeans(n_clusters=optimal_k, random_state=42)
-    data['cluster'] = kmeans.fit_predict(X_scaled)
+    df['cluster'] = kmeans.fit_predict(X_scaled)
 
     # Visualização dos clusters
     st.subheader("Visualização dos Clusters")
