@@ -26,7 +26,7 @@ def main():
     st.write(categorical_columns)
 
     st.subheader("Colunas Quantitativas:")
-    selected_numerical_columns = st.multiselect("Selecione as colunas quantitativas", numerical_columns, default=numerical_columns)
+    selected_numerical_columns = numerical_columns
 
     # Análise de clusterização
     st.subheader("Análise de Clusterização")
