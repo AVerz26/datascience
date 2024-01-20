@@ -55,7 +55,7 @@ def visualize_clusters(X_scaled, cluster_col, optimal_k):
     plt.title(f'Clusters identificados pelo K-means (k={optimal_k})')
     plt.xlabel('Feature 1 (age)')
     plt.ylabel('Feature 2 (income)')
-
+    st.set_option('deprecation.showPyplotGlobalUse', False)
     # Incorporar o plot no Streamlit
     st.pyplot()
 
