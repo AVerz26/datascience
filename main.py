@@ -18,9 +18,9 @@ def main():
     st.subheader("Conteúdo da Planilha:")
     st.write(df)
 
-    # Separação de valores categóricos e quantitativos
-    categorical_columns = df.select_dtypes(include='object').columns
-    numerical_columns = df.select_dtypes(exclude='object').columns
+    # Seleção de colunas categóricas e quantitativas
+    categorical_columns = ['ID', 'sex', 'Marital status', 'education', 'occupation', 'settlement size']
+    numerical_columns = ['age', 'income']
 
     st.subheader("Colunas Categóricas:")
     st.write(categorical_columns)
@@ -31,21 +31,28 @@ def main():
     # Análise de clusterização
     st.subheader("Análise de Clusterização")
 
-    # Parâmetros ajustáveis
-    n_clusters = st.slider("Número de Clusters (k)", min_value=2, max_value=10, value=3)
-
     # Tratamento dos dados (preenchimento de valores ausentes e normalização)
     df[selected_numerical_columns] = df[selected_numerical_columns].fillna(0)
+
+    # Dummizar variáveis categóricas
+    df_dummies = pd.get_dummies(df[categorical_columns], drop_first=True)
+    df = pd.concat([df, df_dummies], axis=1)
+
+    # Selecionar as colunas corretas após a dummização
+    selected_columns_after_dummization = selected_numerical_columns + list(df_dummies.columns)
+
+    # Escalonamento das variáveis
     scaler = StandardScaler()
-    X_scaled = scaler.fit_transform(df[selected_numerical_columns])
+    X_scaled = scaler.fit_transform(df[selected_columns_after_dummization])
 
     # Aplicação do algoritmo KMeans
+    n_clusters = st.slider("Número de Clusters (k)", min_value=2, max_value=10, value=3)
     kmeans = KMeans(n_clusters=n_clusters, random_state=42)
     df['cluster'] = kmeans.fit_predict(X_scaled)
 
     # Visualização dos clusters
     st.subheader("Visualização dos Clusters")
-    visualize_clusters(df, selected_numerical_columns, 'cluster')
+    visualize_clusters(df, selected_columns_after_dummization, 'cluster')
 
 def visualize_clusters(df, features, cluster_col):
     # Pairplot para visualização dos clusters
