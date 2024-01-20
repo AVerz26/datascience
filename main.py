@@ -56,7 +56,8 @@ def main():
 
 def visualize_clusters(df, features, cluster_col):
     # Pairplot para visualização dos clusters
-    sns.pairplot(df, hue=cluster_col, palette='viridis', diag_kind='kde')
+    pairplot_data = pd.concat([df[features], df[cluster_col]], axis=1)
+    sns.pairplot(pairplot_data, hue=cluster_col, palette='viridis', diag_kind='kde')
     st.pyplot()
 
     # Visualização da média das variáveis por cluster
@@ -64,5 +65,4 @@ def visualize_clusters(df, features, cluster_col):
     cluster_means = df.groupby(cluster_col)[features].mean()
     st.write(cluster_means)
 
-if __name__ == "__main__":
     main()
