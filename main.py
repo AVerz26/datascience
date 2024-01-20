@@ -47,9 +47,12 @@ def main():
     # Chame a função para gerar o plot
     visualize_clusters(X_scaled, df['cluster'], optimal_k, kmeans.cluster_centers_)
 
-def visualize_clusters(X_scaled, cluster_col, optimal_k, centroids):
+def visualize_clusters(X_scaled, cluster_col, optimal_k, centroids, scaler):
+    # Reverter a escala original dos dados
+    X_original_scale = scaler.inverse_transform(X_scaled)
+
     # Criar o plot usando matplotlib
-    plt.scatter(X_scaled[:, 0], X_scaled[:, 1], c=cluster_col, cmap='viridis', label='Dados')
+    plt.scatter(X_original_scale[:, 0], X_original_scale[:, 1], c=cluster_col, cmap='viridis', label='Dados')
     plt.scatter(centroids[:, 0], centroids[:, 1], c='red', marker='X', s=100, label='Centroids')
     plt.title(f'Clusters identificados pelo K-means (k={optimal_k})')
     plt.xlabel('Feature 1 (age)')
