@@ -69,7 +69,7 @@ def clustering():
 
 def PCA():
     pca = 12
-    print(pca)
+    st.subheader(pca)
 
 if __name__ == "__main__":
     st.sidebar.title("Análises Técnicas de Dados")
