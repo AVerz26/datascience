@@ -4,7 +4,7 @@ from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
 
-def cluster():
+def clustering():
     st.title("Técnicas de Análise por Clusterização")
 
     # Caminho do arquivo Excel pré-determinado
@@ -67,17 +67,18 @@ def cluster():
     # Incorporar o plot no Streamlit
     st.pyplot()
 
+def PCA():
+    pca = 12
+    print(pca)
 
 if __name__ == "__main__":
     add_selectbox = st.sidebar.selectbox(
-    "How would you like to be contacted?",
-    ("Email", "Home phone", "Mobile phone")
+    "Escolha uma técnica:",
+    ("Clustering", "PCA")
 )
+    if add_selectbox == "Clustering"
+        clustering()
+    else
+        PCA()
 
-# Using "with" notation
-    with st.sidebar:
-        add_radio = st.radio(
-            "Choose a shipping method",
-            ("Standard (5-15 days)", "Express (2-5 days)")
-        )
-    cluster()
+
