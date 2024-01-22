@@ -5,6 +5,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 import matplotlib.pyplot as plt
 
+
 def clustering():
     st.title("Técnicas de Análise por Clusterização")
 
@@ -69,6 +70,8 @@ def clustering():
     # Incorporar o plot no Streamlit
     st.pyplot()
 
+
+
 def PCA_f():
     st.title("Análise de Componentes Principais (PCA)")
 
@@ -103,7 +106,31 @@ def PCA_f():
 
     # Exibir gráfico de dispersão 2D com os componentes principais escolhidos
     pca_df = pd.DataFrame(data=pca_result[:, :num_components], columns=[f"PC{i}" for i in range(1, num_components + 1)])
-    st.scatter_chart(pca_df)
+    
+    # Criar o plot usando matplotlib
+    plt.figure(figsize=(8, 6))
+    plt.scatter(pca_df[f"PC1"], pca_df[f"PC2"], label='Dados')
+    plt.title(f'Gráfico de Dispersão dos Componentes Principais (PC1 vs PC2)')
+    plt.xlabel('Componente Principal 1')
+    plt.ylabel('Componente Principal 2')
+    plt.legend()
+    
+    # Incorporar o plot no Streamlit
+    st.pyplot()
+
+if __name__ == "__main__":
+    st.sidebar.title("Análises Técnicas de Dados")
+
+    add_selectbox = st.sidebar.selectbox(
+        "Escolha uma técnica:",
+        ("Clustering", "PCA")
+    )
+
+    if add_selectbox == "Clustering":
+        clustering()
+    elif add_selectbox == "PCA":
+        PCA_f()
+
 
 if __name__ == "__main__":
     st.sidebar.title("Análises Técnicas de Dados")
