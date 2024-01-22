@@ -69,7 +69,7 @@ def clustering():
     # Incorporar o plot no Streamlit
     st.pyplot()
 
-def PCA():
+def PCA_f():
     st.title("Análise de Componentes Principais (PCA)")
 
     # Simulação de dados (substitua isso pelos seus próprios dados)
@@ -116,5 +116,5 @@ if __name__ == "__main__":
     if add_selectbox == "Clustering":
         clustering()
     elif add_selectbox == "PCA":
-        PCA()
+        PCA_f()
 
