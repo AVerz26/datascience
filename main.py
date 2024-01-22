@@ -1,40 +1,83 @@
 import streamlit as st
+import pandas as pd
 from sklearn.cluster import KMeans
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.neural_network import MLPRegressor
-from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import StandardScaler
+import matplotlib.pyplot as plt
 
-def kmeans_analysis():
-    # Lógica para a análise de K-Means
-    num_clusters = st.slider('Número de clusters:', min_value=2, max_value=10, value=3)
-    st.write(f'Você escolheu {num_clusters} clusters para K-Means.')
+def cluster():
+    st.title("Técnicas de Análise por Clusterização")
 
-def linear_regression_analysis():
-    # Lógica para a análise de Regressão Linear
-    st.write('Outros parâmetros de Regressão Linear aqui...')
+    # Caminho do arquivo Excel pré-determinado
+    file_path = "segmentation data.csv"
 
-def random_forest_analysis():
-    # Lógica para a análise de Random Forest
-    num_estimators = st.slider('Número de estimadores:', min_value=1, max_value=100, value=10)
-    st.write(f'Você escolheu {num_estimators} estimadores para Random Forest.')
+    # Leitura da planilha
+    df = pd.read_csv(file_path)
 
-def neural_network_analysis():
-    # Lógica para a análise de Redes Neurais
-    st.write('Outros parâmetros de Redes Neurais aqui...')
+    # Verificação do conteúdo da planilha
+    st.subheader("Conteúdo da Planilha:")
+    st.write(df)
 
-# Configuração do aplicativo Streamlit
-st.title('Análises Técnicas de Dados')
+    # Seleção de colunas categóricas e quantitativas
+    selected_columns = ['Age', 'Income', 'Education', 'Occupation', 'Settlement size']
 
-# Escolha do tipo de análise
-analysis_type = st.selectbox('Escolha o tipo de análise:', ['K-Means', 'Regressão Linear', 'Random Forest', 'Redes Neurais'])
+    # Análise de clusterização
+    st.subheader("Análise de Clusterização")
 
-# Chama a função correspondente à análise escolhida
-if analysis_type == 'K-Means':
-    kmeans_analysis()
-elif analysis_type == 'Regressão Linear':
-    linear_regression_analysis()
-elif analysis_type == 'Random Forest':
-    random_forest_analysis()
-elif analysis_type == 'Redes Neurais':
-    neural_network_analysis()
+    # Criando um DataFrame apenas com as colunas selecionadas
+    X = df[selected_columns]
 
+    # Dummizando as colunas 'education', 'occupation' e 'settlement_size'
+    X = pd.get_dummies(X, columns=['Education', 'Occupation', 'Settlement size'], drop_first=True)
+
+    # Normalizando os dados
+    scaler = StandardScaler()
+    X_scaled = scaler.fit_transform(X)
+
+    # Aplicação do algoritmo KMeans
+    n_clusters = st.slider("Número de Clusters (k)", min_value=2, max_value=10, value=3)
+    optimal_k = n_clusters  # Ajuste conforme a visualização da curva do cotovelo
+
+    # Aplicando o K-means com o número ótimo de clusters
+    kmeans = KMeans(n_clusters=optimal_k, random_state=42)
+    df['cluster'] = kmeans.fit_predict(X_scaled)
+
+    # Visualização dos clusters
+    
+    st.subheader("Visualização dos Clusters")
+
+    # Chame a função para gerar o plot
+    visualize_clusters(X_scaled, df['cluster'], optimal_k, kmeans.cluster_centers_, scaler)
+
+
+def visualize_clusters(X_scaled, cluster_col, optimal_k, centroids, scaler):
+    # Reverter a escala original dos dados
+    X_original_scale = scaler.inverse_transform(X_scaled)
+
+    # Reverter a escala original dos centroides
+    centroids_original_scale = scaler.inverse_transform(centroids)
+
+    # Criar o plot usando matplotlib
+    plt.scatter(X_original_scale[:, 0], X_original_scale[:, 1], c=cluster_col, cmap='viridis', label='Dados')
+    plt.scatter(centroids_original_scale[:, 0], centroids_original_scale[:, 1], c='red', marker='X', s=100, label='Centroids')
+    plt.title(f'Clusters identificados pelo K-means (k={optimal_k})')
+    plt.xlabel('Feature 1 (age)')
+    plt.ylabel('Feature 2 (income)')
+    plt.legend()
+    st.set_option('deprecation.showPyplotGlobalUse', False)
+    # Incorporar o plot no Streamlit
+    st.pyplot()
+
+
+if __name__ == "__main__":
+    add_selectbox = st.sidebar.selectbox(
+    "How would you like to be contacted?",
+    ("Email", "Home phone", "Mobile phone")
+)
+
+# Using "with" notation
+    with st.sidebar:
+        add_radio = st.radio(
+            "Choose a shipping method",
+            ("Standard (5-15 days)", "Express (2-5 days)")
+        )
+    cluster()
