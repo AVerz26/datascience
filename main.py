@@ -72,13 +72,15 @@ def PCA():
     print(pca)
 
 if __name__ == "__main__":
-    add_selectbox = st.sidebar.selectbox(
-    "Escolha uma técnica:",
-    ("Clustering", "PCA")
-)
-    if add_selectbox == "Clustering"
-        clustering()
-    else
-        PCA()
+    st.title("Análises Técnicas de Dados")
 
+    add_selectbox = st.sidebar.selectbox(
+        "Escolha uma técnica:",
+        ("Clustering", "PCA")
+    )
+
+    if add_selectbox == "Clustering":
+        clustering()
+    elif add_selectbox == "PCA":
+        PCA()
 
