@@ -47,9 +47,9 @@ def cluster():
 
     # Chame a função para gerar o plot
     visualize_clusters(X_scaled, df['cluster'], optimal_k, kmeans.cluster_centers_, scaler)
+    cluster_col = df['cluster']
+    centroids = kmeans.cluster_centers_
 
-
-def visualize_clusters(X_scaled, cluster_col, optimal_k, centroids, scaler):
     # Reverter a escala original dos dados
     X_original_scale = scaler.inverse_transform(X_scaled)
 
