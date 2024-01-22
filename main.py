@@ -14,7 +14,8 @@ def clustering():
     df = pd.read_csv(file_path)
 
     # Verificação do conteúdo da planilha
-    st.subheader("Conteúdo da Planilha:")
+    st.subheader("Tabela de dados")
+    st.write("Esta tabela é composta por variáveis quantitativas e qualitativas, e estas últimas precisam ser dummizadas")
     st.write(df)
 
     # Seleção de colunas categóricas e quantitativas
