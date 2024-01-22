@@ -47,7 +47,7 @@ def clustering():
     
     st.subheader("Visualização dos Clusters")
 
-    # Chame a função para gerar o plot
+    # Chame a função para gerar o pewlot
     
     cluster_col = df['cluster']
     centroids = kmeans.cluster_centers_
