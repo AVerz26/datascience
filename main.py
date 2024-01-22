@@ -69,8 +69,40 @@ def clustering():
     st.pyplot()
 
 def PCA():
-    pca = 12
-    st.subheader(pca)
+    st.title("Análise de Componentes Principais (PCA)")
+
+    # Simulação de dados (substitua isso pelos seus próprios dados)
+    data = pd.DataFrame({
+        'Feature1': [1, 2, 3, 4, 5],
+        'Feature2': [5, 4, 3, 2, 1],
+        'Feature3': [10, 8, 6, 4, 2]
+    })
+
+    # Exibir dados originais
+    st.subheader("Dados Originais:")
+    st.write(data)
+    
+    # Normalizar os dados
+    scaler = StandardScaler()
+    data_scaled = scaler.fit_transform(data)
+
+    # Aplicar PCA
+    pca = PCA()
+    pca_result = pca.fit_transform(data_scaled)
+
+    # Exibir a variância explicada acumulada
+    explained_variance_ratio = pca.explained_variance_ratio_
+    explained_variance_cumulative = explained_variance_ratio.cumsum()
+
+    # Gráfico de variância explicada acumulada
+    st.line_chart(explained_variance_cumulative)
+
+    # Número de componentes principais
+    num_components = st.slider("Número de Componentes Principais:", 1, min(data.shape), value=2)
+
+    # Exibir gráfico de dispersão 2D com os componentes principais escolhidos
+    pca_df = pd.DataFrame(data=pca_result[:, :num_components], columns=[f"PC{i}" for i in range(1, num_components + 1)])
+    st.scatter_chart(pca_df)
 
 if __name__ == "__main__":
     st.sidebar.title("Análises Técnicas de Dados")
