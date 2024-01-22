@@ -46,7 +46,7 @@ def cluster():
     st.subheader("Visualização dos Clusters")
 
     # Chame a função para gerar o plot
-    visualize_clusters(X_scaled, df['cluster'], optimal_k, kmeans.cluster_centers_, scaler)
+    
     cluster_col = df['cluster']
     centroids = kmeans.cluster_centers_
 
