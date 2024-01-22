@@ -72,7 +72,7 @@ def PCA():
     print(pca)
 
 if __name__ == "__main__":
-    st.title("Análises Técnicas de Dados")
+    st.sidebar.title("Análises Técnicas de Dados")
 
     add_selectbox = st.sidebar.selectbox(
         "Escolha uma técnica:",
