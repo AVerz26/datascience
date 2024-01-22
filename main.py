@@ -4,7 +4,7 @@ from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
 
-def main():
+def cluster():
     st.title("Técnicas de Análise por Clusterização")
 
     # Caminho do arquivo Excel pré-determinado
@@ -69,4 +69,4 @@ def visualize_clusters(X_scaled, cluster_col, optimal_k, centroids, scaler):
 
 
 if __name__ == "__main__":
-    main()
+    cluster()
