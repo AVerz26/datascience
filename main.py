@@ -69,4 +69,15 @@ def visualize_clusters(X_scaled, cluster_col, optimal_k, centroids, scaler):
 
 
 if __name__ == "__main__":
+    add_selectbox = st.sidebar.selectbox(
+    "How would you like to be contacted?",
+    ("Email", "Home phone", "Mobile phone")
+)
+
+# Using "with" notation
+    with st.sidebar:
+        add_radio = st.radio(
+            "Choose a shipping method",
+            ("Standard (5-15 days)", "Express (2-5 days)")
+        )
     cluster()
