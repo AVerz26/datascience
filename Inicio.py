@@ -5,7 +5,7 @@ import time
 
 # Função para criar o sistema de simulação
 def criar_sistema():
-    system = chrono.ChSystemNSC()  # Sistema de dinâmica não suave
+    system = chrono.ChSystem()  # Sistema de dinâmica não suave
     
     # Criando um corpo fixo (terra)
     ground = chrono.ChBodyAuxRef()
